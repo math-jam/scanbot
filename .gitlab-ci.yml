@@ -1,0 +1,97 @@
+image: gradle:jdk8-alpine
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+#  - export CI_MERGE_REQUEST_ID=$(curl -s "http://sankhyatec.mgcloud.net.br/api/v4/projects/$CI_PROJECT_ID/merge_requests?private_token=$GITLAB_TOKEN&state=opened" | jq -r ".[]|select(.sha == \"$CI_COMMIT_SHA\")|.iid")
+#  - echo $CI_MERGE_REQUEST_ID
+
+stages:
+  - configure
+  #    - test
+  #    - code_analysis
+  - deploy
+
+#include:
+#    - template: Code-Quality.gitlab-ci.yml
+
+#service:
+#  - docker:dind
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  GRADLE_USER_HOME: /cache/.gradle
+
+cache: &global_cache
+  key: ${CI_PROJECT_NAME}
+  policy: pull-push
+  paths:
+    - build
+    - .gradle
+
+configure:
+  stage: configure
+  script:
+    - rm -Rf build/* || true
+    - ./gradlew --build-cache configureExtension
+  tags:
+    - docker-build
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - src/**/*.{kt,java,xml}
+        - "**/*.{kts}"
+        - .gitlab-ci.yml
+      when: always
+    - if: $CI_COMMIT_MESSAGE =~ /\[run-build\]/
+  cache:
+    # inherit all global cache settings
+    <<: *global_cache
+
+build:
+  stage: deploy
+  script:
+    - ./gradlew buildExtension
+  tags:
+    - docker-build
+  only:
+    refs:
+      - master
+    changes:
+      - src/**/*.{kt,java,xml}
+      - "**/*.{kts}"
+      - .gitlab-ci.yml
+  cache:
+    <<: *global_cache
+    policy: pull
+  artifacts:
+    paths:
+      - dist/*.ext
+      - dist/*.exts
+
+build-test:
+  stage: deploy
+  allow_failure: true
+  script:
+    - ./gradlew buildExtension
+  tags:
+    - docker-build
+  only:
+    refs:
+      - branches
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[run-build\]/
+  except:
+    refs:
+      - master
+      - merge_requests
+  cache:
+    key: buildTest
+    policy: pull
+  needs: ["configure"]
+  artifacts:
+    paths:
+      - "dist/*.ext"
+      - "dist/*.exts"

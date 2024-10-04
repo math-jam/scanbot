@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<metadados>
+	<controls>
+		<control resourceId="br.com.sankhya.devcenter.scanbot" contexto=":name" type="FB" childrenType="MN">
+			<description>Scanbot</description>
+		</control>
+		<control resourceId="br.com.sankhya.devcenter.scanbot.config" contexto=":name">
+			<description><![CDATA[Configuração Scanbot]]></description>
+			<url><![CDATA[${dynaform:ScanbotConfig}]]></url>
+		</control>
+<!--		<control resourceId="br.com.sankhya.devcenter.scanbot.parceiros" contexto=":name">-->
+<!--			<description><![CDATA[Parceiros Scanbot]]></description>-->
+<!--			<url><![CDATA[${dynaform:ScanbotParceiro}]]></url>-->
+<!--		</control>-->
+		<control resourceId="br.com.sankhya.devcenter.scanbot.parceiros" contexto=":name">
+			<description><![CDATA[Parceiros Scanbot]]></description>
+			<url><![CDATA[/:name/Scanbot.xhtml5?mgeSession=${mge.session.id}&resourceID=${resourceID}]]></url>
+		</control>
+	</controls>
+	<controlRelations>
+		<ctrlRelationship fromCtrl="br.com.sankhya.devcenter.scanbot" toCtrl="br.com.sankhya.devcenter.scanbot.config"/>
+		<ctrlRelationship fromCtrl="br.com.sankhya.devcenter.scanbot" toCtrl="br.com.sankhya.devcenter.scanbot.parceiros"/>
+	</controlRelations>
+</metadados>

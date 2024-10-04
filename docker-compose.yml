@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  db:
+    image: lughconsultoria/skw-database2:latest
+    ports:
+      - "1521:1521"
+    networks:
+      - backend
+    shm_size: '1512mb'
+
+  wildfly:
+    image: sankhya-w:${VERSION_SNKW}
+    build:
+      dockerfile: Dockerfile
+      context: docker/
+      args:
+        - VERSION_SNKW=${VERSION_SNKW}
+    ports:
+      - "8080:8080"
+      - "8787:8787"
+      - "35729:35729"
+    volumes:
+      - ./build/exts/:/home/sankhya/wildfly/standalone/deployments/sankhyaw.ear/projeto
+    user: "1000:1000"
+    networks:
+      - backend
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+    command: ["wait-for-it.sh", "db:1521", "--", "start"]
+networks:
+  backend:
+    driver: bridge

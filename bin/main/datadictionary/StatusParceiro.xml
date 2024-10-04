@@ -1,0 +1,29 @@
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="https://snk-devcenter.s3.sa-east-1.amazonaws.com/public/metadados.xsd"
+           xsi:schemaLocation="https://snk-devcenter.s3.sa-east-1.amazonaws.com/public/metadados.xsd">
+    <table name="TGFPAR" nativo="S" sequenceType="A" sequenceField="CODPARC">
+        <description><![CDATA[Parceiro]]></description>
+        <primaryKey>
+            <field name="CODPARC"/>
+        </primaryKey>
+        <instances>
+            <instance name="Parceiros" nativo="S">
+                <description><![CDATA[Parceiro]]></description>
+            </instance>
+        </instances>
+        <fields>
+            <field name="CODPARC" dataType="S" tamanho="1000" nativo="S">
+                <description><![CDATA[Codigo do parceiro]]></description>
+            </field>
+            <field name="STATUSCAD" dataType="S" tamanho="100" allowSearch="S" order="3" nullable="S" valueIfNull="P">
+                <description><![CDATA[Status do cadastro]]></description>
+                <fieldOptions>
+                    <option value="0"><![CDATA[Aguardando liberação]]></option>
+                    <option value="1"><![CDATA[Em revisão]]></option>
+                    <option value="2"><![CDATA[Revisar cadastro]]></option>
+                    <option value="3"><![CDATA[Liberada]]></option>
+                </fieldOptions>
+            </field>
+        </fields>
+    </table>
+</metadados>

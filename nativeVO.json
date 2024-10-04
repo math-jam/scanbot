@@ -1,0 +1,10 @@
+{
+  "estrutura": [
+    {
+      "entidade": "BHHubAcessoCabecalho"
+    },
+    {
+      "entidade": "Usuario"
+    }
+  ]
+}

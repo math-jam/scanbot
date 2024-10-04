@@ -1,0 +1,40 @@
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="https://snk-devcenter.s3.sa-east-1.amazonaws.com/public/metadados.xsd"
+           xsi:schemaLocation="https://snk-devcenter.s3.sa-east-1.amazonaws.com/public/metadados.xsd">
+    <table name="TSBCONF" nativo="N" sequenceType="M">
+        <description><![CDATA[Configuração Scanbot]]></description>
+        <primaryKey>
+            <field name="CODCONF"/>
+        </primaryKey>
+        <instances>
+            <instance name="ScanbotConfig" nativo="N">
+                <description><![CDATA[Configuração Scanbot]]></description>
+            </instance>
+        </instances>
+        <fields>
+            <field name="CODCONF" dataType="I" allowSearch="S" order="1">
+                <description><![CDATA[Referencia]]></description>
+            </field>
+            <field name="TOKEN" dataType="S" tamanho="100" allowSearch="S" order="2">
+                <description><![CDATA[Token Neppo]]></description>
+            </field>
+            <field name="NOMEEMP" dataType="S" tamanho="100" allowSearch="S" order="3">
+                <description><![CDATA[Nome da empresa apresentada no BOT]]></description>
+            </field>
+            <field name="VEICULO" dataType="S" tamanho="10" allowSearch="S" order="4">
+                <description><![CDATA[Solicitar dados Veículo]]></description>
+                <fieldOptions>
+                    <option value="S">Sim</option>
+                    <option value="N"><![CDATA[Não]]></option>
+                </fieldOptions>
+            </field>
+            <field name="OCR" dataType="S" tamanho="10" allowSearch="S" order="5">
+                <description><![CDATA[Utilizar OCR para análise de documentos]]></description>
+                <fieldOptions>
+                    <option value="S"><![CDATA[Sim]]></option>
+                    <option value="N"><![CDATA[Não]]></option>
+                </fieldOptions>
+            </field>
+        </fields>
+    </table>
+</metadados>

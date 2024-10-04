@@ -1,0 +1,14 @@
+<sk-application ng-controller="ScanbotController as ctrl" flex>
+	<sk-dynaform sk-entity-name="ScanbotParceiro" sk-on-dynaform-loaded="ctrl.onDynaformLoaded(dynaform, dataset)">
+		<dynaform-scanbot-parceiro>
+			<sk-left-top-bar>
+				<button ng-disabled="ctrl.btnWhatsapp" class="btn" ng-click="ctrl.callWhatsapp()" primary>
+					<span>Iniciar Whatsapp</span>
+				</button>
+				<button ng-disabled="ctrl.btnFinalizar" class="btn" ng-click="ctrl.finalizarCadastro()" brand>
+					<span>Finalizar</span>
+				</button>
+			</sk-left-top-bar>
+		</dynaform-scanbot-parceiro>
+	</sk-dynaform>
+</sk-application>

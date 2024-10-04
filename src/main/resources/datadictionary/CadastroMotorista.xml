@@ -1,0 +1,642 @@
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="https://snk-devcenter.s3.sa-east-1.amazonaws.com/public/metadados.xsd"
+           xsi:schemaLocation="https://snk-devcenter.s3.sa-east-1.amazonaws.com/public/metadados.xsd">
+    <table name="TSBPAR" nativo="N" sequenceType="A" sequenceField="CODSEQ">
+        <description><![CDATA[Parceiro]]></description>
+        <primaryKey>
+            <field name="CODSEQ"/>
+        </primaryKey>
+        <instances>
+            <instance name="ScanbotParceiro" nativo="N">
+                <description><![CDATA[Parceiro]]></description>
+                <relationShip>
+                    <relation entityName="Parceiro" ignoreFK="S">
+                        <fields>
+                            <field localName="CODPARC" targetName="CODPARC" />
+                        </fields>
+                    </relation>
+                    <relation entityName="Usuario" ignoreFK="S">
+                        <fields>
+                            <field localName="CODUSUCAD" targetName="CODUSU"/>
+                            <field localName="CODUSUENVIO" targetName="CODUSU"/>
+                            <field localName="CODUSUALTER" targetName="CODUSU"/>
+                            <field localName="CODUSUFIN" targetName="CODUSU" />
+                        </fields>
+                    </relation>
+                    <relation entityName="Veiculo" ignoreFK="S">
+                        <fields>
+                            <field localName="CODVEICULO" targetName="CODVEICULO"/>
+                        </fields>
+                    </relation>
+                    <relation entityName="Cidade">
+                        <fields>
+                            <field localName="CIDADE" targetName="CODCID"/>
+                        </fields>
+                    </relation>
+                    <relation entityName="Pais" ignoreFK="S">
+                        <fields>
+                            <field localName="CODPAIS" targetName="CODPAIS"/>
+                        </fields>
+                    </relation>
+                </relationShip>
+            </instance>
+        </instances>
+        <fields>
+            <!--     CAMPOS MAIN      -->
+            <field name="CODSEQ" dataType="I" allowSearch="S" order="0">
+                <description><![CDATA[Nro. Único]]></description>
+            </field>
+            <field name="STATUSCAD" dataType="S" tamanho="100" allowSearch="S" order="1" nullable="N" defaultValue="AGUARDANDO">
+                <description><![CDATA[Etapa do Whatsapp]]></description>
+                <fieldOptions>
+                    <option value="AGUARDANDO">Aguardando</option>
+                    <option value="NOME">Nome</option>
+                    <option value="LGPD">LGPD</option>
+                    <option value="CPFCNPJ">CPF ou CNPJ</option>
+                    <option value="CNH">CNH</option>
+                    <option value="FOTO">Foto do rosto</option>
+                    <option value="FOTOCNH">Foto da CNH</option>
+                    <option value="PLACA">Placa</option>
+                    <option value="VEICPROP">Veículo próprio</option>
+                    <option value="RENAVAM">Renavam</option>
+                    <option value="FOTODOCVEIC">Foto do documento do veículo</option>
+                    <option value="FOTOFRENVEIC">Foto de frente do veículo</option>
+                    <option value="FOTOTRASVEIC">Foto da traseira do veículo</option>
+                    <option value="FINALIZADO">Cadastro finalizado</option>
+                </fieldOptions>
+                <properties>
+<!--                    <prop name="readOnly">-->
+<!--                        <![CDATA[S]]>-->
+<!--                    </prop>-->
+                    <prop name="UITabName">
+                        <![CDATA[__main]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="LGPD" dataType="S" tamanho="1" order="2">
+                <description><![CDATA[LGPD Aceito?]]></description>
+                <fieldOptions>
+                    <option value="S">Sim</option>
+                    <option value="N">Não</option>
+                </fieldOptions>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[__main]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="STATUS_CENTRAL" dataType="S" tamanho="1000" allowSearch="S" order="3" defaultValue="0">
+                <description><![CDATA[Status Atendente]]></description>
+                <fieldOptions>
+                    <option value="0">Aguardando envio</option>
+                    <option value="1">Aguardando liberação</option>
+                    <option value="2">Em análise</option>
+                    <option value="3">Em revisão</option>
+                    <option value="4">Revisar cadastro</option>
+                    <option value="5">Liberada</option>
+                    <option value="6">Bloqueada</option>
+                </fieldOptions>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[__main]]>
+                    </prop>
+                </properties>
+            </field>
+
+            <!--     ABA PRÉ-CADASTRO       -->
+            <field name="CODPAIS" dataType="S" tamanho="100" allowSearch="S" order="4" nullable="N">
+                <description><![CDATA[País]]></description>
+                <properties>
+                    <prop name="requerido">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="UITabName">
+                        <![CDATA[Pré-Cadastro]]>
+                    </prop>
+                </properties>
+                <expression>
+                    <![CDATA[
+                        if($col_CODPAIS == null) {
+                            return new java.math.BigDecimal(55);
+                        }
+
+                        return $col_CODPAIS;
+                    ]]>
+                </expression>
+            </field>
+            <field name="TELEFONE" dataType="S" tamanho="100" allowSearch="S" order="5" nullable="N">
+                <description><![CDATA[Telefone]]></description>
+                <properties>
+                    <prop name="requerido">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="UITabName">
+                        <![CDATA[Pré-Cadastro]]>
+                    </prop>
+                    <prop name="UIType">
+                        <![CDATA[Phone]]>
+                    </prop>
+
+                </properties>
+            </field>
+
+            <!--     ABA PARCEIRO      -->
+            <field name="CODPARC" dataType="I" allowSearch="S" order="6" defaultValue="0">
+                <description><![CDATA[Parceiro]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="CPF" dataType="S" tamanho="100" allowSearch="S" order="7">
+                <description><![CDATA[CPF]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="NOME" dataType="S" tamanho="100" allowSearch="S" order="8">
+                <description><![CDATA[Nome]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="DTNASC" dataType="D" allowSearch="S" order="9">
+                <description><![CDATA[Data Nascimento]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="RG" dataType="S" tamanho="100" allowSearch="S" order="10">
+                <description><![CDATA[Identidade]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Identidade]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="UFEXPED" dataType="I" allowSearch="S" order="11'">
+                <description><![CDATA[UF Expedição]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Identidade]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="EMISSOR" dataType="S" tamanho="100" allowSearch="S" order="12">
+                <description><![CDATA[Emissor do RG]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Identidade]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="CNH" dataType="S" tamanho="100" allowSearch="S" order="13">
+                <description><![CDATA[CNH]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[CNH]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="CATEGORIA" dataType="S" tamanho="100" allowSearch="S" order="14">
+                <description><![CDATA[Categoria]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[CNH]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="VALIDADE" dataType="H" allowSearch="S" order="15">
+                <description><![CDATA[Vencimento da CNH]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[CNH]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="SEGURANCA" dataType="S" tamanho="100" allowSearch="S" order="16">
+                <description><![CDATA[Número de Segurança CNH]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[CNH]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="PRIMEIRAHAB" dataType="D" tamanho="100" allowSearch="S" order="17">
+                <description><![CDATA[Data Primeira Habilitação]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[CNH]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="DTEMISSAO" dataType="D" tamanho="100" allowSearch="S" order="18">
+                <description><![CDATA[Data Emissão CNH Atual]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[CNH]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="PAI" dataType="S" tamanho="100" allowSearch="S" order="19">
+                <description><![CDATA[Pai]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="MAE" dataType="S" tamanho="100" allowSearch="S" order="20">
+                <description><![CDATA[Mãe]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="FOTO" dataType="B" presentationType="I" allowSearch="S" order="21">
+                <description><![CDATA[Foto do rosto]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Documentos]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="FOTOCNH" dataType="B" presentationType="A" allowSearch="S" order="22">
+                <description><![CDATA[CNH Digital]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Parceiro]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Documentos]]>
+                    </prop>
+                </properties>
+            </field>
+
+            <!--     ABA VEICULOS      -->
+            <field name="CODVEICULO" dataType="I" allowSearch="S" order="23" defaultValue="0">
+                <description><![CDATA[Veículo]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="PLACA" dataType="S" tamanho="100" allowSearch="S" order="24">
+                <description><![CDATA[Placa]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="RENAVAM" dataType="S" tamanho="100" allowSearch="S" order="25">
+                <description><![CDATA[Renavam]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="VEICPROP" dataType="S" tamanho="100" allowSearch="S" order="26" nullable="N" valueIfNull="S">
+                <description><![CDATA[Veículo próprio]]></description>
+                <fieldOptions>
+                    <option value="S">Sim</option>
+                    <option value="N">Não</option>
+                </fieldOptions>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="CHASSI" dataType="S" tamanho="100" allowSearch="S" order="27">
+                <description><![CDATA[Chassi]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="MARCAMODELO" dataType="S" tamanho="100" allowSearch="S" order="28">
+                <description><![CDATA[Marca Modelo]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="ESPECIE" dataType="S" tamanho="100" allowSearch="S" order="29">
+                <description><![CDATA[Espécie]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="ANOFABRICACAO" dataType="S" tamanho="100" allowSearch="S" order="30">
+                <description><![CDATA[Ano Fabricação]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="ANOMODELO" dataType="S" tamanho="100" allowSearch="S" order="31">
+                <description><![CDATA[Ano Modelo]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="COR" dataType="S" tamanho="100" allowSearch="S" order="32">
+                <description><![CDATA[Cor]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="COMBUSTIVEL" dataType="S" tamanho="100" allowSearch="S" order="33">
+                <description><![CDATA[Combustível]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="POTENCIACILINDRADA" dataType="S" tamanho="100" allowSearch="S" order="34">
+                <description><![CDATA[Potencia/ Cilindrada]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="CIDADE" dataType="I" allowSearch="S" order="34">
+                <description><![CDATA[Cidade]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="FOTODOCVEIC" dataType="B" presentationType="A" allowSearch="S" order="35">
+                <description><![CDATA[Documento do Veículo]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Documentos]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="FOTOFRENVEIC" dataType="B" presentationType="I" allowSearch="S" order="36">
+                <description><![CDATA[Frente do Veículo]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Documentos]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="FOTOTRASVEIC" dataType="B" presentationType="I" allowSearch="S" order="37">
+                <description><![CDATA[Traseira do Veículo]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Veículo]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Documentos]]>
+                    </prop>
+                </properties>
+            </field>
+
+            <!--     ABA OUTRAS INFORMAÇÕES      -->
+            <field name="TIPCAD" dataType="S" tamanho="1000" allowSearch="S" order="38">
+                <description><![CDATA[Tipo de Cadastro]]></description>
+                <fieldOptions>
+                    <option value="M">Manual</option>
+                    <option value="A"><![CDATA[Automático]]></option>
+                </fieldOptions>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Outras Informações]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="CODUSUCAD" dataType="I" allowSearch="S" order="39" >
+                <description><![CDATA[Usuário]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Outras Informações]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Pré-Cadastro]]>
+                    </prop>
+                </properties>
+                <expression>
+                    <![CDATA[
+                        if ($col_CODUSUCAD == null){
+                            return $ctx_usuario_logado;
+                        }
+
+                        return $col_CODUSUCAD;
+                    ]]>
+                </expression>
+            </field>
+            <field name="DHCAD" dataType="H" allowSearch="S" order="40">
+                <description><![CDATA[Data/Hora]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Outras Informações]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Pré-Cadastro]]>
+                    </prop>
+                </properties>
+                <expression>
+                    <![CDATA[
+                        if ($col_DHCAD == null){
+                            return $ctx_dh_atual;
+                        }
+
+                        return $col_DHCAD;
+                    ]]>
+                </expression>
+            </field>
+            <field name="CODUSUENVIO" dataType="I" allowSearch="S" order="41" >
+                <description><![CDATA[Usuário]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Outras Informações]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Início Whatsapp]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="DHENVIO" dataType="H" allowSearch="S" order="42">
+                <description><![CDATA[Data/Hora]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Outras Informações]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Início Whatsapp]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="CODUSUALTER" dataType="I" allowSearch="S" order="43" >
+                <description><![CDATA[Usuário]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Outras Informações]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Última Alteração]]>
+                    </prop>
+                </properties>
+                <expression>
+                    <![CDATA[
+                        $ctx_usuario_logado;
+                    ]]>
+                </expression>
+            </field>
+            <field name="DHALTER" dataType="H" allowSearch="S" order="44">
+                <description><![CDATA[Data/Hora]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Outras Informações]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Última Alteração]]>
+                    </prop>
+                </properties>
+                <expression>
+                    <![CDATA[
+                        $ctx_dh_atual;
+                    ]]>
+                </expression>
+            </field>
+
+            <field name="CODUSUFIN" dataType="I" allowSearch="S" order="45" >
+                <description><![CDATA[Usuário]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Outras Informações]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Finalização]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="DHFIN" dataType="H" allowSearch="S" order="46">
+                <description><![CDATA[Data/Hora]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Outras Informações]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Finalização]]>
+                    </prop>
+                </properties>
+            </field>
+            <field name="LOGFIN" dataType="S" tamanho="4000" allowSearch="S" order="47" nullable="N">
+                <description><![CDATA[Log]]></description>
+                <properties>
+                    <prop name="UITabName">
+                        <![CDATA[Outras Informações]]>
+                    </prop>
+                    <prop name="readOnly">
+                        <![CDATA[S]]>
+                    </prop>
+                    <prop name="UIGroupName">
+                        <![CDATA[Finalização]]>
+                    </prop>
+                </properties>
+            </field>
+        </fields>
+    </table>
+</metadados>

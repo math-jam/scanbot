@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2018.  Célula de Desenvolvimento Sankhya BH
+  -->
+
+<!DOCTYPE jboss PUBLIC "-//JBoss//DTD JBOSS 3.0//EN" "http://www.jboss.org/j2ee/dtd/jboss_3_0.dtd">
+
+<jboss>
+
+    <enterprise-beans></enterprise-beans>
+
+    <resource-managers>
+    </resource-managers>
+
+</jboss>
